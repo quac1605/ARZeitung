@@ -9,38 +9,12 @@ import { defineComponent } from 'vue';
 import '../../public/libs/mindar/mindar-image-three.prod.js'
 //import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from "../../public/libs/three.js-r132/examples/jsm/loaders/GLTFLoader.js";
+import { loadGLTF, loadAudio, loadVideo } from "../../public/libs/loader.js"
 
 
 const THREE = window.MINDAR.IMAGE.THREE;
 
-const loadGLTF = (path) => {
-  return new Promise((resolve, reject) => {
-    const loader = new GLTFLoader();
-    loader.load(path, (gltf) => {
-      resolve(gltf);
-    });
-  });
-}
 
-const loadAudio = (path) => {
-  return new Promise((resolve, reject) => {
-    const loader = new THREE.AudioLoader();
-    loader.load(path, (buffer) => {
-      resolve(buffer);
-    });
-  });
-}
-
-const loadVideo = (path) => {
-  return new Promise((resolve, reject) => {
-    const video = document.createElement("video");
-    video.addEventListener('loadeddata', () => {
-      video.setAttribute('playsinline', '');
-      resolve(video);
-    });
-    video.src = path;
-  });
-}
 
 export default {
   name: 'PageIndex',
