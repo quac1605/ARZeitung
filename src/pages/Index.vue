@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    class="z-top"
+    class="z-top q-ma-sm"
     flat
     dense
     round
@@ -43,6 +43,48 @@
     <PageListsContact></PageListsContact>
 
   </q-drawer>
+  <div class="row float-right">
+    <div class="col-md-12">
+      <q-btn
+        align="left"
+        rounded
+        class="z-top q-mr-sm q-pa-sm "
+        flat
+        dense
+        icon="mdi-weather-cloudy white"
+        label="Weather"
+        style="width: 100%;"
+        ripple="{ center: true }"
+      />
+      <br>
+      <br>
+      <q-btn
+        align="left"
+        rounded
+        class="z-top q-mr-sm q-pa-sm "
+        flat
+        dense
+        icon="mdi-home-search"
+        label="Immobilien"
+        style="width: 100%;"
+        ripple="{ center: true }"
+      />
+      <br>
+      <br>
+      <q-btn
+        align="left"
+        rounded
+        class="z-top q-mr-sm q-pa-sm "
+        flat
+        dense
+        icon="mdi-card-account-details-outline"
+        label="Jobs"
+        style="width: 100%;"
+        ripple="{ center: true }"
+      />
+    </div>
+  </div>
+
 </template>
 
 <script>
