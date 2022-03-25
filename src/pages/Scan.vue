@@ -2,6 +2,50 @@
   <div class="scene">
     <div id="three-scene-canvas"></div>
   </div>
+  <div class="row float-right">
+    <div class="col-md-12">
+      <q-btn
+        align="left"
+        rounded
+        class="z-top q-mr-sm q-pa-sm"
+        :style="{visibility: isActive ? 'visible' : 'hidden'}"
+        flat
+        dense
+        icon="mdi-weather-cloudy white"
+        label="Weather"
+        style="width: 100%; "
+        ripple="{ center: true }"
+      />
+      <br>
+      <br>
+      <q-btn
+        align="left"
+        rounded
+        class="z-top q-mr-sm q-pa-sm "
+        :style="{visibility: isActive ? 'visible' : 'hidden'}"
+        flat
+        dense
+        icon="mdi-home-search"
+        label="Immobilien"
+        style="width: 100%;"
+        ripple="{ center: true }"
+      />
+      <br>
+      <br>
+      <q-btn
+        align="left"
+        rounded
+        class="z-top q-mr-sm q-pa-sm "
+        :style="{visibility: isActive ? 'visible' : 'hidden'}"
+        flat
+        dense
+        icon="mdi-card-account-details-outline"
+        label="Jobs"
+        style="width: 100%;"
+        ripple="{ center: true }"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -20,6 +64,7 @@ export default {
   name: 'PageIndex',
   data () {
     return {
+      isActive: false,
       scene: null,
       camera: null,
       sceneCanvas: null,
@@ -48,18 +93,10 @@ export default {
       scene.add(light);
 
       // 3D Modelle, Images, Video Loading
-      const binocular = await loadGLTF("/assets/models/binoculars/scene.gltf");
-      binocular.scene.scale.set(0.2, 0.2, 0.2);
-      binocular.scene.position.set(0, 0, 0);
 
       const markuslowe = await loadGLTF("/assets/models/markuslowe/scene.gltf");
       markuslowe.scene.scale.set(0.3, 0.3, 0.3);
       markuslowe.scene.position.set(0, 0, 0);
-
-      const rain = await loadGLTF("/assets/models/rain_2/scene.gltf");
-      rain.scene.scale.set(0.05, 0.05, 0.05);
-      rain.scene.position.set(0, -2.5, 0);
-      rain.scene.rotation.set(0, 0, Math.PI / 2);
 
       const geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
       const loader = new THREE.TextureLoader();
@@ -73,39 +110,21 @@ export default {
       const video_material = new THREE.MeshBasicMaterial({ map: video_texture });
       const video_plane = new THREE.Mesh(video_geometry, video_material);
 
-      //Sound Loading
-      const rain_Audio = await loadAudio("/assets/sounds/rain.mp3");
-      const listener = new THREE.AudioListener();
-      const audio = new THREE.PositionalAudio(listener);
-      audio.setRefDistance(100);
-      audio.setBuffer(rain_Audio);
-      audio.setLoop(true);
-
       //Anchor Creating
-      const binocular_Anchor = mindarThree.addAnchor(0);
-      binocular_Anchor.group.add(video_plane);
+      const video_Anchor = mindarThree.addAnchor(0);
+      video_Anchor.group.add(video_plane);
 
       const markuslowe_Anchor = mindarThree.addAnchor(1);
       markuslowe_Anchor.group.add(markuslowe.scene);
 
-      const rain_Anchor = mindarThree.addAnchor(2);
-      rain_Anchor.group.add(rain.scene);
-      rain_Anchor.group.add(img);
-
-      camera.add(listener);
-      rain_Anchor.group.add(audio);
-
-      rain_Anchor.onTargetFound = () => { audio.play(); }
-      rain_Anchor.onTargetLost = () => { audio.pause(); }
-
-      binocular_Anchor.onTargetFound = () => { video.play(); }
-      binocular_Anchor.onTargetLost = () => { video.pause(); }
-
-      //Animation Editing
-      const mixer = new THREE.AnimationMixer(rain.scene);
-      const action = mixer.clipAction(rain.animations[0]);
-      action.play();
-
+      video_Anchor.onTargetFound = () => {
+        video.play();
+        this.isActive = true;
+      }
+      video_Anchor.onTargetLost = () => {
+        video.pause();
+        this.isActive = false;
+      }
 
       const clock = new THREE.Clock();
 
@@ -114,8 +133,6 @@ export default {
       renderer.setAnimationLoop(() => {
 
         const delta = clock.getDelta
-        rain.scene.rotation.set(0, rain.scene.rotation.y + delta, 0);
-        mixer.update(delta)
         renderer.render(scene, camera);
       });
       await mindarThree.start();
