@@ -1,19 +1,15 @@
 <template>
-  <div class="scene">
-    <div id="three-scene-canvas"></div>
-  </div>
-  <div class="row float-right">
-    <div class="col-md-12">
+  <div class="container">
+    <div class="col-md-12 box stack-top z-top">
       <q-btn
         align="left"
         rounded
-        class="z-top q-mr-sm q-pa-sm"
+        class=" z-top q-mr-sm q-pa-sm map-btn"
         :style="{visibility: isActive ? 'visible' : 'hidden'}"
         flat
         dense
         icon="mdi-weather-cloudy white"
         label="Weather"
-        style="width: 100%; "
         ripple="{ center: true }"
       />
       <br>
@@ -21,13 +17,12 @@
       <q-btn
         align="left"
         rounded
-        class="z-top q-mr-sm q-pa-sm "
+        class=" z-top q-mr-sm q-pa-sm map-btn"
         :style="{visibility: isActive ? 'visible' : 'hidden'}"
         flat
         dense
         icon="mdi-home-search"
         label="Immobilien"
-        style="width: 100%;"
         ripple="{ center: true }"
       />
       <br>
@@ -35,17 +30,54 @@
       <q-btn
         align="left"
         rounded
-        class="z-top q-mr-sm q-pa-sm "
+        class="z-top q-mr-sm q-pa-sm map-btn"
         :style="{visibility: isActive ? 'visible' : 'hidden'}"
         flat
         dense
         icon="mdi-card-account-details-outline"
         label="Jobs"
-        style="width: 100%;"
         ripple="{ center: true }"
       />
     </div>
+    <!-- <q-btn @click="showMarker = !showMarker">Click di</q-btn>
+    <q-btn @click="showMap = !showMap">Click di</q-btn> -->
+    <div class="box map">
+      <l-map
+        v-if="showMap"
+        style="height: 900px"
+        :zoom="zoom"
+        :center="center"
+        z-index="1"
+      >
+        <l-tile-layer
+          :url="url"
+          :attribution="attribution"
+        ></l-tile-layer>
+        <l-marker :lat-lng="markerLatLng1"></l-marker>
+        <l-marker
+          :lat-lng="fhKiel"
+          :visible="showMarker"
+        >
+          <l-popup>
+            <div>
+              <h6>Fachhochschule Kiel</h6>
+              <img
+                src="https://www.fh-kiel.de/fileadmin/template/images/fachhochschule-kiel-logo.svg"
+                style="width: 300px"
+              >
+              <p>
+                Sokratespl. 1, 24149 Kiel
+              </p>
+              <a href="https://www.fh-kiel.de/startseite/">Website</a>
+            </div>
+          </l-popup>
+        </l-marker>
+        <l-marker :lat-lng="markerLatLng3"></l-marker>
+        <l-marker :lat-lng="markerLatLng4"></l-marker>
+      </l-map>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -55,6 +87,8 @@ import '../../public/libs/mindar/mindar-image-three.prod.js'
 import { GLTFLoader } from "../../public/libs/three.js-r132/examples/jsm/loaders/GLTFLoader.js";
 import { loadGLTF, loadAudio, loadVideo } from "../../public/libs/loader.js"
 
+import "leaflet/dist/leaflet.css"
+import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 
 const THREE = window.MINDAR.IMAGE.THREE;
 
@@ -62,6 +96,12 @@ const THREE = window.MINDAR.IMAGE.THREE;
 
 export default {
   name: 'PageIndex',
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+    LPopup
+  },
   data () {
     return {
       isActive: false,
@@ -70,7 +110,19 @@ export default {
       sceneCanvas: null,
       renderer: null,
       light: null,
-      material: null
+      material: null,
+
+      url: "https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=rMS7PCdO9WmYpbjBa3N3",
+      attribution:
+        '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      zoom: 13,
+      center: [54.3224, 10.1331],
+      markerLatLng1: [54.3224, 10.1331],
+      fhKiel: [54.3325625, 10.1779896],
+      markerLatLng3: [54.3275109, 10.1684801],
+      markerLatLng4: [54.3162367, 10.1221542],
+      showMarker: true,
+      showMap: false
     }
   },
 
@@ -118,12 +170,15 @@ export default {
       markuslowe_Anchor.group.add(markuslowe.scene);
 
       video_Anchor.onTargetFound = () => {
-        video.play();
+        // video.play();
         this.isActive = true;
+        this.showMap = true;
       }
       video_Anchor.onTargetLost = () => {
-        video.pause();
+        // video.pause();
         this.isActive = false;
+
+        this.showMap = false;
       }
 
       const clock = new THREE.Clock();
@@ -141,3 +196,32 @@ export default {
   }
 }
 </script>
+<style>
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 20px;
+}
+.box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.9; /* for demo purpose  */
+}
+.stack-top {
+  z-index: 9;
+  margin: 20px; /* for demo purpose  */
+  float: right;
+  width: 150px;
+  height: 200px;
+}
+.map {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+.map-btn {
+  width: 150px;
+}
+</style>
