@@ -1,0 +1,11 @@
+Model Information:
+* title:	Gray Rhino
+* source:	https://sketchfab.com/3d-models/gray-rhino-7613d14a507b42f7b83a227e1dc772fa
+* author:	alfredonicolasalarcon (https://sketchfab.com/alfredonicolasalarcon)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Gray Rhino" (https://sketchfab.com/3d-models/gray-rhino-7613d14a507b42f7b83a227e1dc772fa) by alfredonicolasalarcon (https://sketchfab.com/alfredonicolasalarcon) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

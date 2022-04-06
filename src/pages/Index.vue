@@ -8,9 +8,12 @@
     aria-label="Menu"
     @click="toggleLeftDrawer"
   />
-  <keep-alive>
-    <component :is="selectedTab"></component>
-  </keep-alive>
+  <div @model-viewer="changePage">
+    <keep-alive>
+      <component :is="selectedTab"></component>
+    </keep-alive>
+  </div>
+
   <q-drawer
     v-model="leftDrawerOpen"
     show-if-above
@@ -50,7 +53,7 @@
 
 import { defineComponent, ref } from 'vue';
 import Scan from './Scan.vue';
-
+import ModelViewer from './ModelViewer.vue'
 
 import PageListsHelp from 'src/components/pagelists/PageListsHelp.vue'
 import PageListsContact from 'src/components/pagelists/PageListsContact.vue'
@@ -64,6 +67,7 @@ export default {
   // },
   components: {
     'scan': Scan,
+    'model-viewer': ModelViewer,
 
 
     PageListsHelp,
@@ -92,6 +96,11 @@ export default {
       return date.formatDate(timeStamp, 'dddd D MMMM')
     }
   },
+  // methods: {
+  //   changePage () {
+  //     this.selectedTab = 'model-viewer';
+  //   }
+  // },
   // methods: {
   //   setSelectedTab (tab) {
   //     this.selectedTab = tab;

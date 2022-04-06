@@ -1,1 +1,4 @@
 /* app global css */
+model-viewer#default-poster{
+  background-color: transparent;
+}
