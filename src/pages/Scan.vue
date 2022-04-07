@@ -42,16 +42,17 @@
       </div>
       <!-- <q-btn @click="showMarker = !showMarker">Click di</q-btn>
     <q-btn @click="showMap = !showMap">Click di</q-btn> -->
-      <model-viewer
-        class="z-top"
+      <!-- <model-viewer
+        v-if="markerDetected"
+        class="z-top centered"
         src="assets/gray_rhino/scene.gltf"
         camera-controls
         auto-rotate
         ar
-        reveal="manual"
+        reveal="auto"
         ar-modes="webxr scene-viewer quick-look"
         poster="assets/images/nicht.png"
-      ></model-viewer>
+      ></model-viewer> -->
     </div>
   </q-page>
 </template>
@@ -63,7 +64,7 @@ import '../../public/libs/mindar/mindar-image-three.prod.js'
 import { GLTFLoader } from "../../public/libs/three.js-r132/examples/jsm/loaders/GLTFLoader.js";
 import { loadGLTF, loadAudio, loadVideo } from "../../public/libs/loader.js"
 
-import '@google/model-viewer'
+// import '@google/model-viewer'
 const THREE = window.MINDAR.IMAGE.THREE;
 
 
@@ -84,7 +85,7 @@ export default {
       renderer: null,
       light: null,
       material: null,
-
+      // markerDetected: false
 
     }
   },
@@ -134,13 +135,16 @@ export default {
 
       video_Anchor.onTargetFound = () => {
         // video.play();
-        this.isActive = true;
+        //this.isActive = true;
         //this.selectedTab = 'model-viewer';
         //this.$emit('model-viewer');
+        // this.markerDetected = true;
+        this.$router.push('/model-viewer');
       }
       video_Anchor.onTargetLost = () => {
         // video.pause();
-        this.isActive = false;
+        //this.isActive = false;
+        // this.markerDetected = false;
       }
 
       const clock = new THREE.Clock();
@@ -166,6 +170,13 @@ export default {
   position: relative;
   margin: 20px;
   align-self: center;
+}
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
 }
 </style>
 

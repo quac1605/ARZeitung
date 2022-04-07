@@ -53,7 +53,7 @@
 
 import { defineComponent, ref } from 'vue';
 import Scan from './Scan.vue';
-import ModelViewer from './ModelViewer.vue'
+// import ModelViewerPage from './ModelViewerPage.vue'
 
 import PageListsHelp from 'src/components/pagelists/PageListsHelp.vue'
 import PageListsContact from 'src/components/pagelists/PageListsContact.vue'
@@ -67,7 +67,7 @@ export default {
   // },
   components: {
     'scan': Scan,
-    'model-viewer': ModelViewer,
+    // 'model-viewer': ModelViewer,
 
 
     PageListsHelp,

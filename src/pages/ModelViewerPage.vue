@@ -5,7 +5,10 @@
       camera-controls
       auto-rotate
       ar
+      reveal="auto"
+      style="height: 550px; width: 500px"
     ></model-viewer>
+    <q-btn></q-btn>
   </q-page>
 </template>
 
@@ -13,9 +16,10 @@
 
 import '@google/model-viewer'
 export default {
-
+  name: 'ModelViewerPage',
   components: {
 
   }
 }
 </script>
+
