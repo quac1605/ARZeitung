@@ -80,8 +80,9 @@
             v-close-popup
             rounded
             push
-            label="Let's begin the journey"
-            class=" bg-grey-9 text-white text-h5"
+            label="Got it"
+            class=" bg-grey-9 text-white text-h6"
+            style="width: 200px"
           />
         </q-card-actions>
       </q-card>

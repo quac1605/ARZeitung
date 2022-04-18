@@ -1,22 +1,56 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <q-header elevated>
+      <q-toolbar class="bg-dark">
+        <q-btn
+          class="z-top q-ma-sm"
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleLeftDrawer"
+        />
+        <img
+          src="https://holonative.de/wp-content/uploads/2020/06/holonative_transparent_500px_167px.png"
+          alt="holologo"
+          height="40"
+        >
+      </q-toolbar>
+    </q-header>
 
-    <!-- <q-drawer
+    <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      class="bg-indigo-1 z-top"
     >
 
-      <q-item class="bg-grey-3">
+      <q-item class="bg-dark text-white">
         <q-item-section>
-          Pages
+          <q-toolbar>
+
+            <q-toolbar-title>
+              <img
+                src="https://holonative.de/wp-content/uploads/2020/06/holonative_transparent_500px_167px.png"
+                alt="holologo"
+                height="80"
+                width="200"
+              >
+              <h6 class="q-mt-xs q-mb-xs text-left">
+                AR Zeitung Demo
+              </h6>
+
+            </q-toolbar-title>
+
+          </q-toolbar>
         </q-item-section>
       </q-item>
-      <PageListsScan></PageListsScan>
+
       <PageListsHelp></PageListsHelp>
       <PageListsContact></PageListsContact>
 
-    </q-drawer> -->
+    </q-drawer>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -27,37 +61,27 @@
 
 
 import { defineComponent, ref } from 'vue'
-//import { date } from 'quasar'
-
-// import PageListsScan from 'src/components/pagelists/PageListsScan.vue'
-// import PageListsHelp from 'src/components/pagelists/PageListsHelp.vue'
-// import PageListsContact from 'src/components/pagelists/PageListsContact.vue'
+import PageListsHelp from 'src/components/pagelists/PageListsHelp.vue'
+import PageListsContact from 'src/components/pagelists/PageListsContact.vue'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    // PageListsScan,
-    // PageListsHelp,
-    // PageListsContact
+    PageListsHelp,
+    PageListsContact
   },
 
-  // setup () {
-  //   const leftDrawerOpen = ref(false)
+  setup () {
+    const leftDrawerOpen = ref(false)
 
-  //   return {
+    return {
 
-  //     leftDrawerOpen,
-  //     toggleLeftDrawer () {
-  //       leftDrawerOpen.value = !leftDrawerOpen.value
-  //     }
-  //   }
-  // },
-  // computed: {
-  //   todaysDate () {
-  //     const timeStamp = Date.now()
-  //     return date.formatDate(timeStamp, 'dddd D MMMM')
-  //   }
-  // }
+      leftDrawerOpen,
+      toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
+    }
+  },
 })
 </script>

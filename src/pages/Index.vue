@@ -1,111 +1,137 @@
 <template>
-  <q-btn
-    class="z-top q-ma-sm"
-    flat
-    dense
-    round
-    icon="menu"
-    aria-label="Menu"
-    @click="toggleLeftDrawer"
-  />
-  <div @model-viewer="changePage">
-    <keep-alive>
-      <component :is="selectedTab"></component>
-    </keep-alive>
-  </div>
+  <q-page>
+    <div>
+      <q-dialog
+        v-model="prompt"
+        persistent
+        class="dialog"
+      >
+        <q-card
+          style="min-width: 350px"
+          class="bg-grey-4"
+        >
 
-  <q-drawer
-    v-model="leftDrawerOpen"
-    show-if-above
-    bordered
-    class="bg-indigo-1"
-  >
+          <q-card-actions
+            align="center"
+            class="text-primary"
+          >
 
-    <q-item class="bg-dark text-white">
-      <q-item-section>
-        <q-toolbar>
+            <q-card-section>
+              <q-list>
+                <q-item
+                  clickable
+                  v-ripple
+                  class="text-dark"
+                  align="center"
+                >
+                  <q-item-section>
+                    <div><a href="https://holonative.de/ueber-uns/"><img
+                          src="https://holonative.de/wp-content/uploads/2020/06/holoNative_1000px_333px.png"
+                          width="350"
+                        ></a></div>
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  class="text-dark text-weight-medium text-h6"
+                  align="center"
+                >
+                  <q-item-section>
+                    Step 1: Allow the website to access your camera
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  class="text-dark text-weight-medium text-h6"
+                  align="center"
+                >
+                  <q-item-section>
+                    Step 2: Show your camera in front of the picture that you want.
+                  </q-item-section>
+                </q-item>
 
-          <q-toolbar-title>
-            <img
-              src="https://holonative.de/wp-content/uploads/2020/06/holonative_transparent_500px_167px.png"
-              alt=""
-              height="80"
-              width="200"
-            >
-            <h6 class="q-mt-xs q-mb-xs text-left">
-              AR Zeitung Demo
-            </h6>
+                <q-item
+                  clickable
+                  v-ripple
+                  class="text-dark text-weight-medium text-h6"
+                  align="center"
+                >
+                  <q-item-section>
+                    Step 3: Look and interact through the screen of your phone or computer.
+                  </q-item-section>
+                </q-item>
+              </q-list>
 
-          </q-toolbar-title>
-
-        </q-toolbar>
-      </q-item-section>
-    </q-item>
-
-    <PageListsHelp></PageListsHelp>
-    <PageListsContact></PageListsContact>
-
-  </q-drawer>
+            </q-card-section>
+          </q-card-actions>
+          <q-card-actions
+            align="center"
+            class="text-primary"
+          >
+            <q-btn
+              v-close-popup
+              rounded
+              push
+              class=" bg-grey-9 text-white text-h6"
+              style="width: 200px"
+              @click="choseScanTab"
+            >Let's begin</q-btn>
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
+    <component
+      style="height:100%"
+      id="setTab"
+      :is="selectedTab"
+      @model-viewer="changePage"
+      @scan="choseScanTab"
+    ></component>
+  </q-page>
 
 </template>
 
 <script>
 
 import { defineComponent, ref } from 'vue';
-import Scan from './Scan.vue';
-// import ModelViewerPage from './ModelViewerPage.vue'
+import ScanPage from './ScanPage.vue';
+import ModelViewerPage from './ModelViewerPage.vue'
 
-import PageListsHelp from 'src/components/pagelists/PageListsHelp.vue'
-import PageListsContact from 'src/components/pagelists/PageListsContact.vue'
+
 import { date } from 'quasar'
 
 export default {
-  // provide () {
-  //   return {
-  //     setSelectedTab: this.setSelectedTab
-  //   };
-  // },
   components: {
-    'scan': Scan,
-    // 'model-viewer': ModelViewer,
+    'scan': ScanPage,
+    'model-viewer': ModelViewerPage,
 
-
-    PageListsHelp,
-    PageListsContact
   },
   data () {
     return {
-      selectedTab: 'scan',
+      selectedTab: null,
+      prompt: true
 
     };
   },
-  setup () {
-    const leftDrawerOpen = ref(false)
 
-    return {
+  methods: {
+    changePage () {
+      this.selectedTab = 'model-viewer';
+      console.log(this.selectedTab);
 
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+
+      //window.location.reload();
+      // window.location.href(this.$router.push('/model-viewer'));
+      // window.location.reload();
+      // this.$router.push('/model-viewer');
+    },
+    choseScanTab () {
+      this.selectedTab = 'scan';
+      // this.$router.push('/scan');
     }
   },
-  computed: {
-    todaysDate () {
-      const timeStamp = Date.now()
-      return date.formatDate(timeStamp, 'dddd D MMMM')
-    }
-  },
-  // methods: {
-  //   changePage () {
-  //     this.selectedTab = 'model-viewer';
-  //   }
-  // },
-  // methods: {
-  //   setSelectedTab (tab) {
-  //     this.selectedTab = tab;
-  //   },
-  // },
 
 }
 </script>
