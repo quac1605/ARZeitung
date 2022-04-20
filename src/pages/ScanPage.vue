@@ -102,45 +102,29 @@ export default {
       const { renderer, scene, camera } = mindarThree;
 
 
-      const light = new THREE.HemisphereLight(0xfffff, 0xbbbbff, 1);
-      scene.add(light);
 
       // 3D Modelle, Images, Video Loading
 
-      const markuslowe = await loadGLTF("/assets/models/markuslowe/scene.gltf");
-      markuslowe.scene.scale.set(0.3, 0.3, 0.3);
-      markuslowe.scene.position.set(0, 0, 0);
 
-      const geometry = new THREE.PlaneBufferGeometry(1, 1, 4, 4);
-      const loader = new THREE.TextureLoader();
-      const texture = loader.load("/assets/images/kiel_karte.jpg");
-      const material_1 = new THREE.MeshBasicMaterial({ map: texture });
-      const img = new THREE.Mesh(geometry, material_1);
 
-      const video = await loadVideo("/assets/videos/sintel/sintel.mp4");
-      const video_texture = new THREE.VideoTexture(video);
-      const video_geometry = new THREE.PlaneGeometry(1, 204 / 480);
-      const video_material = new THREE.MeshBasicMaterial({ map: video_texture });
-      const video_plane = new THREE.Mesh(video_geometry, video_material);
+
+
+
 
       //Anchor Creating
       const anzeige_Anchor = mindarThree.addAnchor(0);
-      anzeige_Anchor.group.add(video_plane);
+
       anzeige_Anchor.onTargetFound = () => {
-        // video.play();
-        // this.isActive = true;
-        //console.log(window.location);
-        //this.selectedTab = 'model-viewer';
-        //window.location.replace(this.$router.push('/model-viewer'));
+
         this.$emit('model-viewer');
 
         // this.$router.push('/model-viewer');
 
       }
       anzeige_Anchor.onTargetLost = () => {
-        // video.pause();
+
         this.isActive = false;
-        // this.markerDetected = false;
+
       }
 
       const clock = new THREE.Clock();

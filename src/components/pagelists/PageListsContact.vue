@@ -41,7 +41,7 @@
             <span
               style="font-size: 16px"
               class="text-dark"
-            >holoNative ist eine junge, kreative XR-Agentur aus Kiel. In der noch neuen XR-Industrie konnten wir bereits seit 2017 in Projekten, u.a. auf Landesebene, mit modernster AR/VR-Technologie arbeiten. Wir konzipieren und entwickeln für unsere Kundschaft individuell sinnvolle und profitable AR/VR-Lösungen. So helfen wir Unternehmen beispielsweise komplexe Informationen verständlich visuell aufzubereiten, ihre Marke um eine emotionale Ebene zu erweitern oder ihrer Kundschaft neue Interaktionsmöglichkeiten mit dem gewünschten Produkt zu ermöglichen.</span>
+            >holoNative is a young, creative XR agency from Kiel. In the still new XR industry, we have been able to work with state-of-the-art AR/VR technology in projects, including at state level, since 2017. We design and develop individually meaningful and profitable AR/VR solutions for our customers. For example, we help companies to prepare complex information in a visually understandable way, to add an emotional level to their brand or to enable their customers to interact with the desired product in new ways.</span>
           </q-card-section>
 
           <q-card-actions align="center">

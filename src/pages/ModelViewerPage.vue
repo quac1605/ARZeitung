@@ -2,8 +2,8 @@
   <q-page class="flex flex-center ">
     <model-viewer
       id="preloading"
-      src="assets/gray_rhino/scene.gltf"
-      ios-src="assets/gray_rhino/Gray_Rhino.usdz"
+      src="assets/models/gray_rhino/scene.gltf"
+      ios-src="assetss/models/gray_rhino/Gray_Rhino.usdz"
       camera-controls
       auto-rotate
       ar

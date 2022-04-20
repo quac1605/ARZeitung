@@ -4,50 +4,50 @@
       <q-dialog
         v-model="prompt"
         persistent
-        class="dialog"
+        class="dialog q-pr-none"
       >
         <q-card
           style="min-width: 350px"
-          class="bg-grey-4"
+          class="bg-grey-4 "
         >
 
           <q-card-actions
             align="center"
-            class="text-primary"
+            class="text-primary q-pt-none q-pr-none"
           >
 
-            <q-card-section>
+            <q-card-section class=" q-pl-none q-pt-none q-pr-none">
               <q-list>
                 <q-item
                   clickable
                   v-ripple
-                  class="text-dark"
+                  class="text-dark q-pl-none q-pt-none q-pr-none"
                   align="center"
                 >
-                  <q-item-section>
+                  <q-item-section class="q-pt-none">
                     <div><a href="https://holonative.de/ueber-uns/"><img
                           src="https://holonative.de/wp-content/uploads/2020/06/holoNative_1000px_333px.png"
-                          width="350"
+                          width="360"
                         ></a></div>
                   </q-item-section>
                 </q-item>
                 <q-item
                   clickable
                   v-ripple
-                  class="text-dark text-weight-medium text-h6"
-                  align="center"
+                  class="text-dark text-weight-medium text-h6 q-pl-none q-pr-none"
+                  align="left"
                 >
-                  <q-item-section>
+                  <q-item-section class="q-pa-sm">
                     Step 1: Allow the website to access your camera
                   </q-item-section>
                 </q-item>
                 <q-item
                   clickable
                   v-ripple
-                  class="text-dark text-weight-medium text-h6"
-                  align="center"
+                  class="text-dark text-weight-medium text-h6 q-pl-none q-pr-none"
+                  align="left"
                 >
-                  <q-item-section>
+                  <q-item-section class="q-pa-sm">
                     Step 2: Show your camera in front of the picture that you want.
                   </q-item-section>
                 </q-item>
@@ -55,10 +55,10 @@
                 <q-item
                   clickable
                   v-ripple
-                  class="text-dark text-weight-medium text-h6"
-                  align="center"
+                  class="text-dark text-weight-medium text-h6 q-pl-none q-pr-none"
+                  align="left"
                 >
-                  <q-item-section>
+                  <q-item-section class="q-pa-sm">
                     Step 3: Look and interact through the screen of your phone or computer.
                   </q-item-section>
                 </q-item>
@@ -74,7 +74,7 @@
               v-close-popup
               rounded
               push
-              class=" bg-grey-9 text-white text-h6"
+              class=" bg-grey-9 text-white text-h6 q-pl-none q-pr-none"
               style="width: 200px"
               @click="choseScanTab"
             >Let's begin</q-btn>

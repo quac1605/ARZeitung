@@ -35,7 +35,6 @@
                 src="https://holonative.de/wp-content/uploads/2020/06/holonative_transparent_500px_167px.png"
                 alt="holologo"
                 height="80"
-                width="200"
               >
               <h6 class="q-mt-xs q-mb-xs text-left">
                 AR Zeitung Demo
