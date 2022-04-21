@@ -67,8 +67,25 @@ import { loadGLTF, loadAudio, loadVideo } from "../../public/libs/loader.js"
 
 // import '@google/model-viewer'
 const THREE = window.MINDAR.IMAGE.THREE;
+const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+  container: document.body,
+  imageTargetSrc: 'assets/targets/target...',
+  maxTrack: 3,
+});
+const {renderer, scene, camera} = mindarThree;
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight
+}
 
+window.addEventListener('resize', () => {
+  //update sizes
+  sizes.height = window.innerHeight
+  sizes.width = window.innerWidth
 
+  //update renderer
+  renderer.setSize(sizes.width, sizes.height)
+})
 
 export default {
   name: 'ScanPage',
@@ -80,9 +97,11 @@ export default {
   data () {
     return {
       isActive: false,
-
-
-
+      scene: null,
+      camera: null,
+      renderer: null,
+      light: null,
+      material: null
     }
   },
 
@@ -92,24 +111,18 @@ export default {
 
   methods: {
     async init () {
-      const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-        container: document.getElementById("ar-container"),
-        //container: document.body,
-        imageTargetSrc: '/assets/targets/group_target.mind',
-        maxTrack: 2,
 
-      });
-      const { renderer, scene, camera } = mindarThree;
+      // 3D Modelle Loader
+      const kiel_hofe = await loadGLTF("/assets/modesl/kielhofe/2022_04_01_Neubauten_KielHoefe_ohneAnimation_mitGreyMaterial.gltf");
+      kiel_hofe.scene.scale.set(0.0005, 0.0005, 0.0005);
+      kiel_hofe.scene.rotation.x = Math.PI/2;
+      kiel_hofe.scene.rotation.y = Math.PI;
+      kiel_hofe.scene.position.set(0, 0, 0)
+      kiel_hofe.scene.userData.clickable = true;
 
+      //Audio Loader
 
-
-      // 3D Modelle, Images, Video Loading
-
-
-
-
-
-
+      //Video Loader
 
       //Anchor Creating
       const anzeige_Anchor = mindarThree.addAnchor(0);
