@@ -1,59 +1,6 @@
 <template >
   <q-page class="full-height">
     <div id="ar-container">
-
-      <div class="col-md-12 box stack-top z-top">
-        <q-btn
-          align="left"
-          rounded
-          class=" z-top q-mr-sm q-pa-sm map-btn"
-          :style="{visibility: isActive ? 'visible' : 'hidden'}"
-          flat
-          dense
-          icon="mdi-weather-cloudy white"
-          label="Weather"
-          ripple="{ center: true }"
-        />
-        <br>
-        <br>
-        <q-btn
-          align="left"
-          rounded
-          class=" z-top q-mr-sm q-pa-sm map-btn"
-          :style="{visibility: isActive ? 'visible' : 'hidden'}"
-          flat
-          dense
-          icon="mdi-home-search"
-          label="Immobilien"
-          ripple="{ center: true }"
-        />
-        <br>
-        <br>
-        <q-btn
-          align="left"
-          rounded
-          class="z-top q-mr-sm q-pa-sm map-btn"
-          :style="{visibility: isActive ? 'visible' : 'hidden'}"
-          flat
-          dense
-          icon="mdi-card-account-details-outline"
-          label="Jobs"
-          ripple="{ center: true }"
-        />
-      </div>
-      <!-- <q-btn @click="showMarker = !showMarker">Click di</q-btn>
-    <q-btn @click="showMap = !showMap">Click di</q-btn> -->
-      <!-- <model-viewer
-        v-if="markerDetected"
-        class="z-top centered"
-        src="assets/gray_rhino/scene.gltf"
-        camera-controls
-        auto-rotate
-        ar
-        reveal="auto"
-        ar-modes="webxr scene-viewer quick-look"
-        poster="assets/images/nicht.png"
-      ></model-viewer> -->
     </div>
   </q-page>
 </template>
@@ -61,8 +8,6 @@
 <script>
 import { defineComponent } from 'vue';
 import '../../public/libs/mindar/mindar-image-three.prod.js'
-//import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { GLTFLoader } from "../../public/libs/three.js-r132/examples/jsm/loaders/GLTFLoader.js";
 import { loadGLTF, loadAudio, loadVideo } from "../../public/libs/loader.js"
 
 // import '@google/model-viewer'
@@ -72,61 +17,69 @@ const THREE = window.MINDAR.IMAGE.THREE;
 
 export default {
   name: 'ScanPage',
-  // components: {
-
-  // },
-
-
   data () {
     return {
-      isActive: false,
-
-
-
+      videoOnPlay: false,
+      threeDmodelOnPlay: false,
+      modelviewerOnPlay: false
     }
   },
-
   mounted () {
     this.init()
   },
-
   methods: {
     async init () {
       const mindarThree = new window.MINDAR.IMAGE.MindARThree({
         container: document.getElementById("ar-container"),
         //container: document.body,
-        imageTargetSrc: '/assets/targets/group_target.mind',
-        maxTrack: 2,
+        imageTargetSrc: '/assets/targets/marker_final02.mind',
+        maxTrack: 4,
 
       });
       const { renderer, scene, camera } = mindarThree;
-
-
-
-      // 3D Modelle, Images, Video Loading
-
-
-
-
-
-
-
-      //Anchor Creating
+      // Open Model Viewer with an Marker
       const anzeige_Anchor = mindarThree.addAnchor(0);
 
       anzeige_Anchor.onTargetFound = () => {
-
-        this.$emit('model-viewer');
-
-        // this.$router.push('/model-viewer');
-
+        if (this.videoOnPlay != true) {
+          this.$emit('model-viewer');
+          console.log("anzeige target found");
+        }
+        console.log("anzeige target found");
+        this.modelviewerOnPlay = true;
       }
       anzeige_Anchor.onTargetLost = () => {
+        console.log("anzeige target lost");
+        this.modelviewerOnPlay = false;
+      }
+      // Open Video
+      const video = await loadVideo("assets/videos/InterviewVideo.mp4");
+      const texture = new THREE.VideoTexture(video);
+      const geometry = new THREE.PlaneGeometry(1, 1);
+      const material = new THREE.MeshBasicMaterial({ map: texture });
+      const plane = new THREE.Mesh(geometry, material);
+      const video_Anchor = mindarThree.addAnchor(1);
+      video_Anchor.group.add(plane)
+      video_Anchor.onTargetFound = () => {
+        this.videoOnPlay = true;
+        console.log("video target found");
+        video.play();
+      }
 
-        this.isActive = false;
+      video_Anchor.onTargetLost = () => {
+        this.videoOnPlay = false;
+        video.pause();
+        console.log("video target lost");
+        // If Anzeige is in the frame when the video target lost then play the model-viewer
+        if (this.modelviewerOnPlay == true) {
+          this.$emit('model-viewer');
+        }
 
       }
 
+      video.addEventListener("play", () => {
+        video.currentTime = 6;
+      })
       const clock = new THREE.Clock();
 
       // start AR
