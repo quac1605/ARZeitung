@@ -12,8 +12,25 @@ import { loadGLTF, loadAudio, loadVideo } from "../../public/libs/loader.js"
 
 // import '@google/model-viewer'
 const THREE = window.MINDAR.IMAGE.THREE;
+const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+  container: document.body,
+  imageTargetSrc: 'assets/targets/target...',
+  maxTrack: 3,
+});
+const { renderer, scene, camera } = mindarThree;
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight
+}
 
+window.addEventListener('resize', () => {
+  //update sizes
+  sizes.height = window.innerHeight
+  sizes.width = window.innerWidth
 
+  //update renderer
+  renderer.setSize(sizes.width, sizes.height)
+})
 
 export default {
   name: 'ScanPage',
